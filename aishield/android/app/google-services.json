@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "766174905426",
+    "firebase_url": "https://mranti-a39d6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mranti-a39d6",
+    "storage_bucket": "mranti-a39d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766174905426:android:c7462a7868c2dad4eb0b8b",
+        "android_client_info": {
+          "package_name": "com.example.aishield"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766174905426-6inqor66dop95os8kpogb1c89jbg8utv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs_8_FNguob11Mh7k4XwchgZ7VTJvZ6wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766174905426-6inqor66dop95os8kpogb1c89jbg8utv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766174905426-061gndq1nd7hqr8g70nbpv63cda0ffv8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.revoluzionApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766174905426:android:f4fda155536f2225eb0b8b",
+        "android_client_info": {
+          "package_name": "com.example.revoluzion_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766174905426-6inqor66dop95os8kpogb1c89jbg8utv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs_8_FNguob11Mh7k4XwchgZ7VTJvZ6wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766174905426-6inqor66dop95os8kpogb1c89jbg8utv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766174905426-061gndq1nd7hqr8g70nbpv63cda0ffv8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.revoluzionApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
