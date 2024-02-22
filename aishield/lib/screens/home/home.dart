@@ -42,7 +42,8 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration.zero, () async {
+      _determinePosition();
       contractAddress();
     });
   }
@@ -169,17 +170,6 @@ class _HomeState extends ConsumerState<Home> {
                     children: [
                       Row(
                         children: [
-                          // Container(
-                          //   alignment: Alignment.centerLeft,
-                          //   child: Text(
-                          //     "Current Situation",
-                          //     style: TextStyle(
-                          //       fontSize: 16,
-                          //       fontWeight: FontWeight.w500,
-                          //       color: Colors.grey.withOpacity(0.8),
-                          //     ),
-                          //   ),
-                          // ),
                           Spacer(),
                           Container(
                               child: IconButton(
@@ -367,7 +357,6 @@ class _HomeState extends ConsumerState<Home> {
                                 ],
                               ),
                               onTap: () async {
-                                _determinePosition();
                                 Position _currentLocation =
                                     await Geolocator.getCurrentPosition(
                                         desiredAccuracy: LocationAccuracy.high);
