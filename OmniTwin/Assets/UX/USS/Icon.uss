@@ -1,0 +1,87 @@
+.close-icon-button {
+    background-image: url('project://database/Assets/Sprites/Icons/cross.png?fileID=21300000&guid=b86cbc9b0a875a846bcbfe252afb1917&type=3#cross');
+    background-color: rgba(0, 0, 0, 0);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 24px;
+    height: 24px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-circ;
+}
+
+.close-icon-button:hover {
+    scale: 1.2 1.2;
+    rotate: 90deg;
+}
+
+.disaster-icon-button {
+    width: 64px;
+    height: 64px;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in-out-cubic;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.disaster-icon-button:hover {
+    scale: 1.2 1.2;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.loc-btn {
+    font-size: 24px;
+    white-space: normal;
+    -unity-text-align: upper-center;
+    color: rgb(229, 226, 249);
+    background-color: rgba(8, 171, 159, 0.5);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-left-color: rgba(12, 255, 237, 0.5);
+    border-right-color: rgba(12, 255, 237, 0.5);
+    border-top-color: rgba(12, 255, 237, 0.5);
+    border-bottom-color: rgba(12, 255, 237, 0.5);
+    -unity-font-style: normal;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.15s;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    flex-direction: row;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.loc-btn:hover {
+    background-color: rgb(10, 204, 190);
+    scale: 1.1 1.1;
+    border-left-color: rgb(77, 255, 242);
+    border-right-color: rgb(77, 255, 242);
+    border-top-color: rgb(77, 255, 242);
+    border-bottom-color: rgb(77, 255, 242);
+}
