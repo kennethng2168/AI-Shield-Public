@@ -4,6 +4,15 @@ AI Shield for Google Solution Challenge 2024
 
 ## Omni Twin
 
+#### Usage
+
+Omni Twin is a Unity project.
+
+1. Download [Unity](https://unity.com/download)
+2. Open the project in Unity.
+
+Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the zip file which contains the `OmniTwin.exe` binary.
+
 ### Flood Simulation
 
 ![flood-sim1](./Screenshots/OmniTwin/flood-sim1.png)
