@@ -11,7 +11,7 @@ Omni Twin is a Unity project.
 1. Download [Unity](https://unity.com/download)
 2. Open the project in Unity.
 
-Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the zip file which contains the `OmniTwin.exe` binary.
+Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the `OmniTwin.zip` file which contains the `OmniTwin.exe` binary.
 
 ### Flood Simulation
 
