@@ -22,14 +22,13 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collections": {
-      "version": "2.1.0-pre.18",
+      "version": "2.1.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.burst": "1.8.3",
+        "com.unity.burst": "1.8.4",
         "com.unity.modules.unityanalytics": "1.0.0",
-        "com.unity.nuget.mono-cecil": "1.11.4",
-        "com.unity.test-framework": "1.3.2"
+        "com.unity.nuget.mono-cecil": "1.11.4"
       },
       "url": "https://packages.unity.com"
     },
@@ -246,9 +245,7 @@
       "source": "embedded",
       "dependencies": {
         "com.unity.mathematics": "1.2.6",
-        "com.unity.collections": "1.2.3",
-        "com.unity.burst": "1.6.5",
-        "com.unity.test-framework": "1.1.30"
+        "com.unity.collections": "2.1.4"
       }
     },
     "com.unity.modules.ai": {
