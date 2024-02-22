@@ -48,10 +48,10 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Album Collection",
+                              "ESG Album Collection",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize: 25,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -65,12 +65,15 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                         ],
                       ),
                       const SizedBox(height: 5),
-                      Text(
-                        "2/4",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "2/4",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -134,8 +137,8 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                   alignment: Alignment.topCenter,
                   padding: EdgeInsets.only(
                     top: 230,
-                    right: 15,
-                    left: 15,
+                    right: 10,
+                    left: 10,
                   ),
                   child: Container(
                     padding: EdgeInsets.all(10),

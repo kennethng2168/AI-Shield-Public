@@ -30,34 +30,20 @@ class _RecoveryPageFormState extends ConsumerState<RecoveryPage> {
 
   void initState() {
     super.initState();
-
-    // var _items = await _localStorageService.readAllSecureData();
-    // print(_items);
+    Future.delayed(Duration.zero, () async {
+      var currentPlatform = Theme.of(context).platform;
+      LocalStorageService service = LocalStorageService(currentPlatform);
+      var secureDataList = await service.readAllSecureData();
+      List<int> bytesEntropy = hex.decode(secureDataList?[1]);
+      var mnemonic = Mnemonic(bytesEntropy, Language.english);
+      ref.watch(mnemonicPhraseProvider.notifier).state = mnemonic.sentence;
+    });
   }
 
   bool passwordNotFound = false;
 
   @override
   Widget build(BuildContext context) {
-    var currentPlatform = Theme.of(context).platform;
-
-    LocalStorageService service = LocalStorageService(currentPlatform);
-    var secureDataList = service.readAllSecureData();
-    secureDataList.then((value) {
-      List<int> bytesEntropy = hex.decode(value?[1]);
-      // print(bytesEntropy);
-      var mnemonic = Mnemonic(bytesEntropy, Language.english);
-
-      // print(mnemonic3.seed);
-      // print(mnemonic.sentence);
-      ref.watch(mnemonicPhraseProvider.notifier).state = mnemonic.sentence;
-
-      // print(currentPlatform);
-    });
-    // print(ref.watch(mnemonicPhraseProvider));
-    // print);
-
-    // print(service.readAllSecureData());
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -66,10 +52,6 @@ class _RecoveryPageFormState extends ConsumerState<RecoveryPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Padding(
-                //   padding: EdgeInsets.all(20),
-
-                // ),
                 Lottie.asset(
                   "assets/animations/recover.json",
                   height: 200,
@@ -144,35 +126,6 @@ class _RecoveryPageFormState extends ConsumerState<RecoveryPage> {
                       ),
                     ],
                   ),
-
-                //   const SizedBox(
-                //     width: 10,
-                //     height: 10,
-                //   ),
-                // ],
-                // ),
-
-                // Container(
-                //   width: 150,
-                //   padding: EdgeInsets.all(10),
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(15),
-                //     border: Border.all(
-                //       color: mainColor,
-                //       width: 2,
-                //     ),
-                //   ),
-                //   child: Text(
-                //     "${i + 2}. ${ref.watch(mnemonicPhraseProvider).split(" ")[i + 1]}",
-                //     style: TextStyle(
-                //       fontSize: 25,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //     textAlign: TextAlign.center,
-                //   ),
-                // )
-
-                // const _TextField(label: 'Email address', icon: Icons.email),
                 SizedBox(height: 16),
 
                 // const SizedBox(height: 5),
@@ -211,14 +164,12 @@ class _RecoveryPageFormState extends ConsumerState<RecoveryPage> {
                         ),
                       ),
                       onPressed: () {
-                        secureDataList.then((value) {
-                          if (value!.isNotEmpty) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MainScreen()));
-                          }
-                        });
+                        if (ref.watch(mnemonicPhraseProvider)!.isNotEmpty) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen()));
+                        }
                       }),
                 ),
                 const SizedBox(height: 30),

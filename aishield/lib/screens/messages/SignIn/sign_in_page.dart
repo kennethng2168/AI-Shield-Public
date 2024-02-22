@@ -57,7 +57,7 @@ class SignInPage extends StatelessWidget {
             const Spacer(),
             Container(
               height: 60,
-              width: 400,
+              width: 350,
               child: ElevatedButton.icon(
                 icon: Icon(Icons.wallet),
                 label: Text(
@@ -83,7 +83,7 @@ class SignInPage extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
             GestureDetector(
               onTap: () => Navigator.push(context,
@@ -96,6 +96,9 @@ class SignInPage extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 15,
             ),
           ],
         ),

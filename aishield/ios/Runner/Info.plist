@@ -38,6 +38,16 @@
 	<string>This app needs access to location when open.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs access to location when in the background.</string>
+	<key>LSApplicationQueriesSchemes</key>
+		<array>
+		<string>instagram-stories</string>
+		<string>facebook-stories</string>
+		<string>facebook</string>
+		<string>instagram</string>
+		<string>twitter</string>
+		<string>whatsapp</string>
+	<string>tg</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
