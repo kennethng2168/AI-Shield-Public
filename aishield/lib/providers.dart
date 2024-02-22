@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
 import '../../services/storage_service.dart';
 import '../../services/firestore_service.dart';
 
@@ -10,9 +9,9 @@ final authStateChangesProvider = StreamProvider<User?>((ref) {
   return ref.watch(firebaseAuthProvider).authStateChanges();
 });
 
+final latitudeProvider = StateProvider<String>((ref) => "");
+final longitudeProvider = StateProvider<String>((ref) => "");
 final mnemonicPhraseProvider = StateProvider<String>((ref) => "");
-
-final positionProvider = StateProvider<Position>((ref) => Position )
 final contractAddressProvider = StateProvider<String>((ref) => "");
 final passwordStatesProvider = StateProvider<bool>((ref) => false);
 final confirmPasswordStatesProvider = StateProvider<bool>((ref) => false);

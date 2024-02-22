@@ -44,6 +44,12 @@ class _HomeState extends ConsumerState<Home> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       _determinePosition();
+      Position _currentLocation = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      ref.watch(latitudeProvider.notifier).state =
+          _currentLocation.latitude.toString();
+      ref.watch(longitudeProvider.notifier).state =
+          _currentLocation.longitude.toString();
       contractAddress();
     });
   }
@@ -429,7 +435,10 @@ class _HomeState extends ConsumerState<Home> {
                     child: Container(
                       child: FlutterMap(
                         options: MapOptions(
-                            center: LatLng(3.0554, 101.7006), zoom: 10.0),
+                            center: LatLng(
+                                double.parse(ref.watch(latitudeProvider)),
+                                double.parse(ref.watch(longitudeProvider))),
+                            zoom: 15.0),
                         children: [
                           TileLayer(
                             urlTemplate:
@@ -458,7 +467,11 @@ class _HomeState extends ConsumerState<Home> {
                                       Marker(
                                         width: 30.0,
                                         height: 30.0,
-                                        point: LatLng(3.0554, 101.7006),
+                                        point: LatLng(
+                                            double.parse(
+                                                ref.watch(latitudeProvider)),
+                                            double.parse(
+                                                ref.watch(longitudeProvider))),
                                         child: Container(
                                           child: Container(
                                             child: Icon(
