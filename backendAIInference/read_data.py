@@ -37,20 +37,20 @@ def run_inference (docDict, image):
     # model = YOLO(r'C:\Users\user\PycharmProjects\nlpchat\runs\segment\train5\weights\best.pt')
     print(docDict)
     if (docDict["selection"] == "Flood"):
-        model_name = r"C:\Users\user\PycharmProjects\backendAIInference\models\flood.pt"
+        model_name = r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\flood.pt"
     elif(docDict["selection"] == "Fire"):
-        model_name = r'C:\Users\user\PycharmProjects\backendAIInference\models\fire.pt'
+        model_name = r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\fire.pt"
     elif (docDict["selection"] == "Potholes"):
-        model_name = r'C:\Users\user\PycharmProjects\backendAIInference\models\potholes.pt'
+        model_name = r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\potholes.pt"
     elif (docDict["selection"] == "Accidents"):
-        model_name = r'C:\Users\user\PycharmProjects\backendAIInference\models\accidents.pt'
+        model_name = r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\accidents.pt"
     model = YOLO(model_name)
-    results = model.predict(source=image, conf=0.6, save=True, project=r"C:\Users\user\PycharmProjects\nlpchat\Detection")
+    results = model.predict(source=image, conf=0.6, save=True, project=r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\Detection")
     result = results[0]
     # print(result.boxes.cls)
     prob = str(result.boxes.cls)
     prob=prob.split("tensor([")[1].split(']')[0]
-    if model_name == r"C:\Users\user\PycharmProjects\nlpchat\runs\segment\train2\weights\flood.pt":
+    if model_name == r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\flood.pt":
         print("flood")
         print(prob)
         for i in prob:
@@ -65,7 +65,7 @@ def run_inference (docDict, image):
                 flag_flood = False
                 print("None")
         print(flag_flood)
-    elif model_name == r'C:\Users\user\PycharmProjects\nlpchat\runs\segment\train5\weights\fire_best.pt':
+    elif model_name == r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\fire.pt":
         for i in prob:
             if prob == "1." or "1":
                 classification = "Fire"
@@ -78,7 +78,7 @@ def run_inference (docDict, image):
             elif i == "":
                 flag_fire = False
                 print("None")
-    elif model_name == r'C:\Users\user\PycharmProjects\nlpchat\runs\segment\train20\weights\best.pt':
+    elif model_name == r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\potholes.pt":
         for i in prob:
             if prob == "2." or "2":
                 classification = "Pothole"
@@ -91,12 +91,13 @@ def run_inference (docDict, image):
             elif i == "":
                 flag_fire = False
                 print("None")
-    elif model_name == r'C:\Users\user\PycharmProjects\nlpchat\runs\detect\train3\weights\best.pt':
+    elif model_name == r"C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\models\accidents.pt":
+        print(prob)
         for i in prob:
             if prob == "1." or "1":
                 classification = "Accident"
                 flag_accident = True
-                print("Pothole")
+                print("Accident")
                 break;
             elif i == "":
                 flag_accident = False
@@ -106,7 +107,7 @@ def run_inference (docDict, image):
 
     import os
 
-    directory_path = r'C:\Users\user\PycharmProjects\nlpchat\Detection'
+    directory_path = r'C:\Users\user\Desktop\AI-Shield-Public\backendAIInference\Detection'
     most_recent_file = None
     most_recent_time = 0
 
@@ -158,7 +159,7 @@ def run_inference (docDict, image):
 def on_snapshot(doc_snapshot, changes, read_time):
     for doc in doc_snapshot:
         docDict = doc.to_dict()
-        print(docDict)
+        print(docDict["categories"])
 
         if (docDict["categories"] ==  None):
             image_data = docDict["id"] + ".png"
