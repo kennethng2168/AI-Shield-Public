@@ -13,6 +13,7 @@ import 'package:hex/hex.dart';
 import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:reward_popup/reward_popup.dart';
 import 'package:social_share/social_share.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -35,29 +36,24 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
       _determinePosition();
-      Position _currentLocation = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      ref.watch(latitudeProvider.notifier).state =
-          _currentLocation.latitude.toString();
-      ref.watch(longitudeProvider.notifier).state =
-          _currentLocation.longitude.toString();
+      print(latitudeProvider);
+      print(longitudeProvider);
       contractAddress();
     });
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   _topBanner() {
     return Container(
-      // padding: EdgeInsets.all(15.0),
       height: 270,
       decoration: BoxDecoration(
         color: mainColor,
@@ -66,19 +62,12 @@ class _HomeState extends ConsumerState<Home> {
   }
 
   /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
       return Future.error('Location services are disabled.');
     }
 
@@ -86,11 +75,6 @@ class _HomeState extends ConsumerState<Home> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
@@ -100,25 +84,26 @@ class _HomeState extends ConsumerState<Home> {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
+    Position _currentLocation = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    ref.watch(latitudeProvider.notifier).state =
+        _currentLocation.latitude.toString();
 
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    ref.watch(longitudeProvider.notifier).state =
+        _currentLocation.longitude.toString();
+    return _currentLocation;
   }
 
   Future<void> contractAddress() async {
     final httpRpcUrl = "https://ethereum-sepolia.publicnode.com";
     final wsRpcUrl = "wss://ethereum-sepolia.publicnode.com";
-
     var httpClient = Client();
     EtherAmount balance;
-
     var ethClient = Web3Client(httpRpcUrl, httpClient);
     var currentPlatform = Theme.of(context).platform;
     LocalStorageService service = LocalStorageService(currentPlatform);
     var secureDataList = await service.readAllSecureData();
     var mnemonicGenerate = secureDataList?[6];
-    print(mnemonicGenerate);
     final isValidMnemonic = bip39.validateMnemonic(mnemonicGenerate);
     if (!isValidMnemonic) {
       throw 'Invalid mnemonic';
@@ -126,12 +111,10 @@ class _HomeState extends ConsumerState<Home> {
     String hdPath = "m/44'/60'/0'/0";
     final seed = bip39.mnemonicToSeed(mnemonicGenerate);
     final root = bip32.BIP32.fromSeed(seed);
-
     const first = 0;
     final firstChild = root.derivePath("$hdPath/$first");
     final privateKey = HEX.encode(firstChild.privateKey as List<int>);
     final credentials = EthPrivateKey.fromHex(privateKey);
-
     ref.watch(contractAddressProvider.notifier).state =
         credentials.address.toString();
   }
@@ -143,10 +126,8 @@ class _HomeState extends ConsumerState<Home> {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
         const curve = Curves.ease;
-
         var tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
         return SlideTransition(
           position: animation.drive(tween),
           child: child,
@@ -156,8 +137,6 @@ class _HomeState extends ConsumerState<Home> {
   }
 
   Widget build(BuildContext context) {
-    var lonL = [101.7006665, 101.7006666, 101.7006667, 101.7006668];
-    var latL = [3.0554333, 3.0554334, 3.0554335, 3.0554336];
     return Scaffold(
       backgroundColor: Colors.white,
       body: ref.watch(latitudeProvider).isEmpty &&
@@ -183,7 +162,7 @@ class _HomeState extends ConsumerState<Home> {
                                 Container(
                                     child: IconButton(
                                   onPressed: () {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -195,6 +174,7 @@ class _HomeState extends ConsumerState<Home> {
                                 )),
                               ],
                             ),
+                            const SizedBox(height: 10),
                             GestureDetector(
                               child: Row(
                                 children: [
@@ -231,7 +211,7 @@ class _HomeState extends ConsumerState<Home> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 15),
                             Row(
                               children: [
                                 GestureDetector(
@@ -296,6 +276,7 @@ class _HomeState extends ConsumerState<Home> {
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 30),
                           ],
                         ),
                       ),

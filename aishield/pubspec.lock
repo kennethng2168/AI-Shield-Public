@@ -1480,6 +1480,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  reward_popup:
+    dependency: "direct main"
+    description:
+      name: reward_popup
+      sha256: "019cf5caa0246efebc7a4e9c445f7cffe1b5e2c53f6522f075b52ca63c9a2398"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   riverpod:
     dependency: transitive
     description:
@@ -1785,10 +1793,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: c512655380d241a337521703af62d2c122bf7b77a46ff7dd750092aa9433499c
+      sha256: "0ecc004c62fd3ed36a2ffcbe0dd9700aee63bd7532d0b642a488b1ec310f492e"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.4"
+    version: "6.2.5"
   url_launcher_android:
     dependency: transitive
     description:

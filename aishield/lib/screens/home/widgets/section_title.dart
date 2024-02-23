@@ -10,7 +10,7 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.only(left: 20),
       child: Row(
         children: [
           Flexible(
@@ -35,7 +35,19 @@ class SectionTitle extends StatelessWidget {
           const Spacer(),
           title == "Risk Status"
               ? GestureDetector(
-                  child: Icon(Icons.share),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Share Location",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Icon(Icons.share)
+                    ],
+                  ),
                   onTap: () async {
                     Position _currentLocation =
                         await Geolocator.getCurrentPosition(
@@ -45,6 +57,9 @@ class SectionTitle extends StatelessWidget {
                   },
                 )
               : Container(),
+          const SizedBox(
+            width: 15,
+          )
         ],
       ),
     );

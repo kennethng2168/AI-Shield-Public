@@ -915,6 +915,8 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - social_share (0.0.1):
+    - Flutter
   - speech_to_text (0.0.1):
     - Flutter
     - Try
@@ -948,6 +950,7 @@ DEPENDENCIES:
   - screen_protector (from `.symlinks/plugins/screen_protector/ios`)
   - secure_application (from `.symlinks/plugins/secure_application/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - social_share (from `.symlinks/plugins/social_share/ios`)
   - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
@@ -1037,6 +1040,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/secure_application/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  social_share:
+    :path: ".symlinks/plugins/social_share/ios"
   speech_to_text:
     :path: ".symlinks/plugins/speech_to_text/ios"
   url_launcher_ios:
@@ -1102,6 +1107,7 @@ SPEC CHECKSUMS:
   SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
   secure_application: 27d424e8c2e770f63e38e280b5a51f921aa9b0c8
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
+  social_share: 702a5e3842addd22db515aa9e1e00a4b80a0296d
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96

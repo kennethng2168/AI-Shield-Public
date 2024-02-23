@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:reward_popup/reward_popup.dart';
 
 import '../../constant.dart';
 
@@ -23,6 +26,14 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
       ),
     );
   }
+
+  dynamic imagesList = [
+    "assets/images/airpollution.jpeg",
+    "assets/images/biodiversity.png",
+    "assets/images/carbon.png",
+    "assets/images/renewable.jpeg"
+  ];
+  final random = new Random();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,9 +120,24 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                                 ],
                               ),
                             ),
-                            onTap: () =>
-                                // Navigator.of(context).pushNamed("/reportPage"),
-                                print("Redeem Now"),
+                            onTap: () async {
+                              final answer = await showRewardPopup<String>(
+                                context,
+                                backgroundColor: Colors.black,
+                                child: Positioned.fill(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: Image.asset(
+                                      imagesList[
+                                          random.nextInt(imagesList.length)],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                           const SizedBox(
                             width: 10,

@@ -175,18 +175,6 @@ class _ReportPageState extends ConsumerState<ReportPage> {
                             width: 350,
                             height: 300,
                           ))
-                        // : ref.watch(detectionImageProvider) != null
-                        // ?
-                        // // ? ref.watch(detectionImageProvider) != ""?
-                        // Container(
-                        //     height: 200,
-                        //     child: Image.network(
-                        //       ref.read(detectionImageProvider) ?? "",
-                        //     ),
-                        //   )
-                        // : Container(
-                        //     height: 200,
-                        //   )
                         : Container(
                             padding: EdgeInsets.only(
                               top: MediaQuery.of(context).size.height * 0.1,
@@ -349,14 +337,6 @@ class _ReportPageState extends ConsumerState<ReportPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          // TextSpan(
-                          //   text: 'Your report has been identified as Fire case.',
-                          //   style: TextStyle(
-                          //     color: Colors.red,
-                          //     fontSize: 16,
-                          //     fontWeight: FontWeight.bold,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
