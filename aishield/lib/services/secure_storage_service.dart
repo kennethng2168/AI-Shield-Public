@@ -6,13 +6,16 @@ import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt.dart' as encryptLib;
 
 class LocalStorage {
-  String categories;
-  String value;
-  String mnemonicSeed;
+  String? categories;
+  String? value;
+  String? mnemonicSeed;
   // String iv;
-  String mnemonicEntropy;
-  String keyHex;
-  String mac;
+  String? mnemonicEntropy;
+  String? keyHex;
+  String? mac;
+  String? rewards;
+  int? rewardCompleted;
+  int? albumCompleted;
 
   String keyPair;
   LocalStorage(
@@ -22,7 +25,10 @@ class LocalStorage {
       this.mnemonicSeed = "Default",
       this.mnemonicEntropy = "",
       this.keyHex = "",
-      this.keyPair = ""});
+      this.keyPair = "",
+      this.rewards = "",
+      this.rewardCompleted,
+      this.albumCompleted});
 }
 
 class LocalStorageService {
@@ -41,7 +47,7 @@ class LocalStorageService {
       print("True");
       await _storage.write(
         iOptions: _getIOSOptions(),
-        key: storageItem.categories,
+        key: storageItem.categories.toString(),
         value: storageItem.value,
       );
       await _storage.write(
@@ -69,11 +75,26 @@ class LocalStorageService {
         key: "seed",
         value: storageItem.mnemonicSeed.toString(),
       );
+      await _storage.write(
+        iOptions: _getIOSOptions(),
+        key: "rewards",
+        value: storageItem.rewards.toString(),
+      );
+      await _storage.write(
+        iOptions: _getIOSOptions(),
+        key: "rewardCompleted",
+        value: storageItem.rewardCompleted.toString(),
+      );
+      await _storage.write(
+        iOptions: _getIOSOptions(),
+        key: "albumCompleted",
+        value: storageItem.albumCompleted.toString(),
+      );
       return "IOS Write Data";
     } else if (platform == TargetPlatform.android) {
       await _storage.write(
         aOptions: _getAndroidOptions(),
-        key: storageItem.categories,
+        key: storageItem.categories.toString(),
         value: storageItem.value,
       );
       await _storage.write(
@@ -87,7 +108,7 @@ class LocalStorageService {
         value: storageItem.keyHex,
       );
       await _storage.write(
-        iOptions: _getIOSOptions(),
+        aOptions: _getAndroidOptions(),
         key: "mac",
         value: storageItem.mac,
       );
@@ -101,6 +122,21 @@ class LocalStorageService {
         aOptions: _getAndroidOptions(),
         key: "seed",
         value: storageItem.mnemonicSeed.toString(),
+      );
+      await _storage.write(
+        aOptions: _getAndroidOptions(),
+        key: "rewards",
+        value: storageItem.rewards.toString(),
+      );
+      await _storage.write(
+        aOptions: _getAndroidOptions(),
+        key: "rewardCompleted",
+        value: storageItem.rewardCompleted.toString(),
+      );
+      await _storage.write(
+        aOptions: _getAndroidOptions(),
+        key: "albumCompleted",
+        value: storageItem.albumCompleted.toString(),
       );
       return "Android Write Data";
     } else {
@@ -113,10 +149,11 @@ class LocalStorageService {
     var data;
     if (platform == TargetPlatform.iOS) {
       data = await _storage.read(
-          key: storageItem.categories, iOptions: _getIOSOptions());
+          key: storageItem.categories.toString(), iOptions: _getIOSOptions());
     } else if (platform == TargetPlatform.android) {
       data = await _storage.read(
-          key: storageItem.categories, aOptions: _getAndroidOptions());
+          key: storageItem.categories.toString(),
+          aOptions: _getAndroidOptions());
     } else {
       data = "None";
       print("Target Platform Not found");
@@ -127,10 +164,11 @@ class LocalStorageService {
   Future<String?> deleteData(LocalStorage storageItem) async {
     if (platform == TargetPlatform.iOS) {
       await _storage.delete(
-          key: storageItem.categories, iOptions: _getIOSOptions());
+          key: storageItem.categories.toString(), iOptions: _getIOSOptions());
     } else if (platform == TargetPlatform.android) {
       await _storage.delete(
-          key: storageItem.categories, aOptions: _getAndroidOptions());
+          key: storageItem.categories.toString(),
+          aOptions: _getAndroidOptions());
     } else {
       print("Target Platform Not found");
     }
@@ -165,9 +203,11 @@ class LocalStorageService {
       listStorage.add(allValue["recovery"]);
       listStorage.add(allValue["keyHex"]);
       listStorage.add(allValue["mac"]);
-      listStorage.add(allValue["hash"]);
       listStorage.add(allValue["keyPair"]);
       listStorage.add(allValue["seed"]);
+      listStorage.add(allValue["rewards"]);
+      listStorage.add(allValue["rewardCompleted"]);
+      listStorage.add(allValue["albumCompleted"]);
 
       // print(listStorage);
       return listStorage;
@@ -175,17 +215,16 @@ class LocalStorageService {
     } else if (platform == TargetPlatform.android) {
       Map<String, String> allValue =
           await _storage.readAll(aOptions: _getAndroidOptions());
-      // List<LocalStorage> list =
-      //     allData.entries.map((e) => LocalStorage(e.key, e.value)).toList();
-      // print(allValue);
       var listStorage = [];
       listStorage.add(allValue["password"]);
       listStorage.add(allValue["recovery"]);
       listStorage.add(allValue["keyHex"]);
       listStorage.add(allValue["mac"]);
-      listStorage.add(allValue["hash"]);
       listStorage.add(allValue["keyPair"]);
       listStorage.add(allValue["seed"]);
+      listStorage.add(allValue["rewards"]);
+      listStorage.add(allValue["rewardCompleted"]);
+      listStorage.add(allValue["albumCompleted"]);
 
       // print(listStorage);
       return listStorage;

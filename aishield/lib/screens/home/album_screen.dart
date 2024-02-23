@@ -1,12 +1,15 @@
 import 'dart:math';
 
+import 'package:aishield/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hashlib/hashlib.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:reward_popup/reward_popup.dart';
 
 import '../../constant.dart';
+import '../../services/secure_storage_service.dart';
 
 class AlbumScreen extends ConsumerStatefulWidget {
   AlbumScreen({Key? key}) : super(key: key);
@@ -27,11 +30,36 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      _readRewards();
+    });
+  }
+
+  Future<void> _readRewards() async {
+    var currentPlatform = Theme.of(context).platform;
+    LocalStorageService service = LocalStorageService(currentPlatform);
+    var secureDataList = await service.readAllSecureData();
+    var storageRewards = secureDataList?[6];
+    List<String> rewardsList = storageRewards.split(", ");
+    print(rewardsList);
+    ref.watch(reward1Provider.notifier).state = double.parse(rewardsList[0]);
+    ref.watch(reward2Provider.notifier).state = double.parse(rewardsList[1]);
+    ref.watch(reward3Provider.notifier).state = double.parse(rewardsList[2]);
+    ref.watch(reward4Provider.notifier).state = double.parse(rewardsList[3]);
+    ref.watch(numberAlbumProvider.notifier).state =
+        int.parse(secureDataList?[7]);
+    ref.watch(completedAlbumProvider.notifier).state =
+        int.parse(secureDataList?[8]);
+  }
+
   dynamic imagesList = [
-    "assets/images/airpollution.jpeg",
-    "assets/images/biodiversity.png",
     "assets/images/carbon.png",
-    "assets/images/renewable.jpeg"
+    "assets/images/airpollution.jpeg",
+    "assets/images/renewable.jpeg",
+    "assets/images/biodiversity.png"
   ];
   final random = new Random();
 
@@ -79,7 +107,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                       Container(
                         alignment: Alignment.center,
                         child: Text(
-                          "2/4",
+                          ref.watch(numberAlbumProvider).toString() + "/4",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -121,6 +149,189 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                               ),
                             ),
                             onTap: () async {
+                              var randomImage =
+                                  imagesList[random.nextInt(imagesList.length)];
+
+                              for (var i = 0; i < imagesList.length; i++) {
+                                if (randomImage == imagesList[i]) {
+                                  if (i == 0) {
+                                    if (ref.watch(reward1Provider) >= 1.00) {
+                                      print("Try Again Next Time");
+                                    } else {
+                                      ref
+                                          .watch(reward1Provider.notifier)
+                                          .state += 0.25;
+                                      if (ref.watch(reward1Provider) >= 1.00) {
+                                        ref
+                                            .watch(numberAlbumProvider.notifier)
+                                            .state += 1;
+                                      }
+                                      //Store the data into a secure local storage with the following parameters
+                                      var currentPlatform =
+                                          Theme.of(context).platform;
+                                      LocalStorageService service =
+                                          LocalStorageService(currentPlatform);
+                                      var secureDataList =
+                                          await service.readAllSecureData();
+
+                                      var storage = LocalStorage(
+                                        categories: "password",
+                                        value: secureDataList?[0],
+                                        mac: secureDataList?[3],
+                                        mnemonicSeed: secureDataList?[5],
+                                        mnemonicEntropy: secureDataList?[1],
+                                        keyHex: secureDataList?[2],
+                                        keyPair: secureDataList?[4],
+                                        rewards:
+                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                        rewardCompleted:
+                                            ref.watch(numberAlbumProvider),
+                                      );
+                                      service.writeData(storage);
+                                    }
+                                  } else if (i == 1) {
+                                    if (ref.watch(reward2Provider) >= 1.00) {
+                                      print("Try Again Next Time");
+                                    } else {
+                                      ref
+                                          .watch(reward2Provider.notifier)
+                                          .state += 0.25;
+
+                                      if (ref.watch(reward2Provider) >= 1.00) {
+                                        ref
+                                            .watch(numberAlbumProvider.notifier)
+                                            .state += 1;
+                                      }
+                                      var currentPlatform =
+                                          Theme.of(context).platform;
+                                      LocalStorageService service =
+                                          LocalStorageService(currentPlatform);
+                                      var secureDataList =
+                                          await service.readAllSecureData();
+
+                                      var storage = LocalStorage(
+                                        categories: "password",
+                                        value: secureDataList?[0],
+                                        mac: secureDataList?[3],
+                                        mnemonicSeed: secureDataList?[5],
+                                        mnemonicEntropy: secureDataList?[1],
+                                        keyHex: secureDataList?[2],
+                                        keyPair: secureDataList?[4],
+                                        rewards:
+                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                        rewardCompleted:
+                                            ref.watch(numberAlbumProvider),
+                                      );
+                                      service.writeData(storage);
+                                    }
+                                  } else if (i == 2) {
+                                    if (ref.watch(reward3Provider) >= 1.00) {
+                                      print("Try Again Next Time");
+                                    } else {
+                                      ref
+                                          .watch(reward3Provider.notifier)
+                                          .state += 0.25;
+                                      if (ref.watch(reward3Provider) >= 1.00) {
+                                        ref
+                                            .watch(numberAlbumProvider.notifier)
+                                            .state += 1;
+                                      }
+                                      var currentPlatform =
+                                          Theme.of(context).platform;
+                                      LocalStorageService service =
+                                          LocalStorageService(currentPlatform);
+                                      var secureDataList =
+                                          await service.readAllSecureData();
+
+                                      var storage = LocalStorage(
+                                        categories: "password",
+                                        value: secureDataList?[0],
+                                        mac: secureDataList?[3],
+                                        mnemonicSeed: secureDataList?[5],
+                                        mnemonicEntropy: secureDataList?[1],
+                                        keyHex: secureDataList?[2],
+                                        keyPair: secureDataList?[4],
+                                        rewards:
+                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                        rewardCompleted:
+                                            ref.watch(numberAlbumProvider),
+                                      );
+                                      service.writeData(storage);
+                                    }
+                                  } else if (i == 3) {
+                                    if (ref.watch(reward4Provider) >= 1.00) {
+                                      print("Try Again Next Time");
+                                    } else {
+                                      ref
+                                          .watch(reward4Provider.notifier)
+                                          .state += 0.25;
+                                      if (ref.watch(reward4Provider) >= 1.00) {
+                                        ref
+                                            .watch(numberAlbumProvider.notifier)
+                                            .state += 1;
+                                      }
+                                      var currentPlatform =
+                                          Theme.of(context).platform;
+                                      LocalStorageService service =
+                                          LocalStorageService(currentPlatform);
+                                      var secureDataList =
+                                          await service.readAllSecureData();
+
+                                      var storage = LocalStorage(
+                                        categories: "password",
+                                        value: secureDataList?[0],
+                                        mac: secureDataList?[3],
+                                        mnemonicSeed: secureDataList?[5],
+                                        mnemonicEntropy: secureDataList?[1],
+                                        keyHex: secureDataList?[2],
+                                        keyPair: secureDataList?[4],
+                                        rewards:
+                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                        rewardCompleted:
+                                            ref.watch(numberAlbumProvider),
+                                      );
+                                      service.writeData(storage);
+                                    }
+                                  }
+                                }
+                                if (ref
+                                        .watch(numberAlbumProvider.notifier)
+                                        .state >=
+                                    4) {
+                                  ref
+                                      .watch(numberAlbumProvider.notifier)
+                                      .state = 0;
+                                  var currentPlatform =
+                                      Theme.of(context).platform;
+                                  LocalStorageService service =
+                                      LocalStorageService(currentPlatform);
+                                  var secureDataList =
+                                      await service.readAllSecureData();
+
+                                  var storage = LocalStorage(
+                                      categories: "password",
+                                      value: secureDataList?[0],
+                                      mac: secureDataList?[3],
+                                      mnemonicSeed: secureDataList?[5],
+                                      mnemonicEntropy: secureDataList?[1],
+                                      keyHex: secureDataList?[2],
+                                      keyPair: secureDataList?[4],
+                                      rewards:
+                                          "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                      rewardCompleted:
+                                          ref.watch(numberAlbumProvider),
+                                      albumCompleted: 0);
+                                  ref.watch(reward1Provider.notifier).state =
+                                      0.0;
+                                  ref.watch(reward2Provider.notifier).state =
+                                      0.0;
+                                  ref.watch(reward3Provider.notifier).state =
+                                      0.0;
+                                  ref.watch(reward4Provider.notifier).state =
+                                      0.0;
+                                }
+                              }
+
                               final answer = await showRewardPopup<String>(
                                 context,
                                 backgroundColor: Colors.black,
@@ -130,8 +341,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                                       Navigator.of(context).pop(true);
                                     },
                                     child: Image.asset(
-                                      imagesList[
-                                          random.nextInt(imagesList.length)],
+                                      randomImage,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -206,9 +416,22 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                                       animation: true,
                                       width: 150,
                                       lineHeight: 25,
-                                      percent: 0.5,
+                                      percent: ref.watch(reward1Provider),
                                       center: Text(
-                                        "2/4",
+                                        ref.watch(reward1Provider) == 0.0
+                                            ? "0/4"
+                                            : ref.watch(reward1Provider) == 0.25
+                                                ? "1/4"
+                                                : ref.watch(reward1Provider) ==
+                                                        0.5
+                                                    ? "2/4"
+                                                    : ref.watch(reward1Provider) ==
+                                                            0.75
+                                                        ? "3/4"
+                                                        : ref.watch(reward1Provider) ==
+                                                                1.00
+                                                            ? "4/4"
+                                                            : "",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -247,9 +470,22 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                                       animation: true,
                                       width: 150,
                                       lineHeight: 25,
-                                      percent: 0.5,
+                                      percent: ref.watch(reward2Provider),
                                       center: Text(
-                                        "3/4",
+                                        ref.watch(reward2Provider) == 0.0
+                                            ? "0/4"
+                                            : ref.watch(reward2Provider) == 0.25
+                                                ? "1/4"
+                                                : ref.watch(reward2Provider) ==
+                                                        0.5
+                                                    ? "2/4"
+                                                    : ref.watch(reward2Provider) ==
+                                                            0.75
+                                                        ? "3/4"
+                                                        : ref.watch(reward2Provider) ==
+                                                                1.00
+                                                            ? "4/4"
+                                                            : "",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -292,9 +528,22 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                                       animation: true,
                                       width: 150,
                                       lineHeight: 25,
-                                      percent: 1,
+                                      percent: ref.watch(reward3Provider),
                                       center: Text(
-                                        "4/4",
+                                        ref.watch(reward3Provider) == 0.0
+                                            ? "0/4"
+                                            : ref.watch(reward3Provider) == 0.25
+                                                ? "1/4"
+                                                : ref.watch(reward3Provider) ==
+                                                        0.5
+                                                    ? "2/4"
+                                                    : ref.watch(reward3Provider) ==
+                                                            0.75
+                                                        ? "3/4"
+                                                        : ref.watch(reward3Provider) ==
+                                                                1.00
+                                                            ? "4/4"
+                                                            : "",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -333,9 +582,22 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                                       animation: true,
                                       width: 150,
                                       lineHeight: 25,
-                                      percent: 1,
+                                      percent: ref.watch(reward4Provider),
                                       center: Text(
-                                        "4/4",
+                                        ref.watch(reward4Provider) == 0.0
+                                            ? "0/4"
+                                            : ref.watch(reward4Provider) == 0.25
+                                                ? "1/4"
+                                                : ref.watch(reward4Provider) ==
+                                                        0.5
+                                                    ? "2/4"
+                                                    : ref.watch(reward4Provider) ==
+                                                            0.75
+                                                        ? "3/4"
+                                                        : ref.watch(reward4Provider) ==
+                                                                1.00
+                                                            ? "4/4"
+                                                            : "",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,

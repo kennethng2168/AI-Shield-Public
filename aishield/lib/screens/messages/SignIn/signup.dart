@@ -180,6 +180,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                             mnemonicEntropy: hex.encode(mnemonic.entropy),
                             keyHex: keyHex,
                             keyPair: bytesToHex(keyPair),
+                            rewards: '0.0, 0.0, 0.0, 0.0',
+                            rewardCompleted: 0,
+                            albumCompleted: 0,
                           );
                           //Write the data into the secure local storage
                           LocalStorageService service =

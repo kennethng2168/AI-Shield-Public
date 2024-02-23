@@ -177,7 +177,7 @@ class _LogInFormState extends ConsumerState<LogInPage> {
                             // If matched, decrypt the password and navigate to the main screen
                             // Keyhased poly1305 authentication
                             var keyMAC = poly1305auth(encrypted.bytes,
-                                hexToBytes(value[5])); //With the keypair stored
+                                hexToBytes(value[4])); //With the keypair stored
                             // keyhased poly1305 double hashing with keccak512
 
                             if (keccak512sum(keyMAC.toString()) == value[3]) {

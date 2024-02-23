@@ -91,6 +91,7 @@ class _HomeState extends ConsumerState<Home> {
 
     ref.watch(longitudeProvider.notifier).state =
         _currentLocation.longitude.toString();
+
     return _currentLocation;
   }
 
@@ -103,7 +104,8 @@ class _HomeState extends ConsumerState<Home> {
     var currentPlatform = Theme.of(context).platform;
     LocalStorageService service = LocalStorageService(currentPlatform);
     var secureDataList = await service.readAllSecureData();
-    var mnemonicGenerate = secureDataList?[6];
+    var mnemonicGenerate = secureDataList?[5];
+
     final isValidMnemonic = bip39.validateMnemonic(mnemonicGenerate);
     if (!isValidMnemonic) {
       throw 'Invalid mnemonic';

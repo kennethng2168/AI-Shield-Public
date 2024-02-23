@@ -58,7 +58,7 @@ class SectionTitle extends StatelessWidget {
                 )
               : Container(),
           const SizedBox(
-            width: 15,
+            width: 10,
           )
         ],
       ),

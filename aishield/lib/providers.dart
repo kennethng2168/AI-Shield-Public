@@ -8,7 +8,12 @@ final firebaseAuthProvider =
 final authStateChangesProvider = StreamProvider<User?>((ref) {
   return ref.watch(firebaseAuthProvider).authStateChanges();
 });
-
+final completedAlbumProvider = StateProvider<int>((ref) => 0);
+final numberAlbumProvider = StateProvider<int>((ref) => 0);
+final reward1Provider = StateProvider<double>((ref) => 0.0);
+final reward2Provider = StateProvider<double>((ref) => 0.0);
+final reward3Provider = StateProvider<double>((ref) => 0.0);
+final reward4Provider = StateProvider<double>((ref) => 0.0);
 final latitudeProvider = StateProvider<String>((ref) => "");
 final longitudeProvider = StateProvider<String>((ref) => "");
 final mnemonicPhraseProvider = StateProvider<String>((ref) => "");
