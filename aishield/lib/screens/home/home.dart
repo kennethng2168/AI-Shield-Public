@@ -452,14 +452,7 @@ class _HomeState extends ConsumerState<Home> {
                                         .getDetection(),
                                     builder: (context, snapshot) {
                                       if (!snapshot.hasData) {
-                                        return Text(
-                                          "No Data",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        );
+                                        return CircularProgressIndicator();
                                       } else {
                                         return MarkerLayer(markers: [
                                           Marker(
@@ -473,8 +466,9 @@ class _HomeState extends ConsumerState<Home> {
                                             child: Container(
                                               child: Container(
                                                 child: Icon(
-                                                  Icons.warning,
-                                                  color: Colors.red,
+                                                  Icons.location_on,
+                                                  color:
+                                                      Colors.lightGreenAccent,
                                                   size: 40,
                                                 ),
                                               ),
