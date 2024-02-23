@@ -12,7 +12,6 @@ import 'package:hashlib/hashlib.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'authwidget.dart';
 import 'constant.dart';
 import 'firebase_options.dart';
 import 'screens/Report/report.dart';

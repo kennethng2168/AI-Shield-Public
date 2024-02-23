@@ -5,7 +5,6 @@ import '../../constant.dart';
 import 'pages/chats/chat_drone.dart';
 import 'pages/chats/chats.dart';
 import 'pages/chats/textandimage.dart';
-import 'pages/notifications/notifications.dart';
 
 class Messages extends StatefulWidget {
   const Messages({Key? key}) : super(key: key);

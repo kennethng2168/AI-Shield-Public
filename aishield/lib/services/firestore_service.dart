@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Detection.dart';
-import '../models/user_data.dart';
 
 class FirestoreService {
   String? docId;
@@ -39,16 +38,5 @@ class FirestoreService {
 
   Future<void> deleteDetection(String id) async {
     return await firestore.collection("detection").doc(id).delete();
-  }
-
-  Future<void> addUser(
-    UserData user,
-  ) async {
-    await firestore.collection("users").doc(user.uid).set(user.toMap());
-  }
-
-  Future<UserData?> getUser(String uid) async {
-    final doc = await firestore.collection("user").doc(uid).get();
-    return doc.exists ? UserData.fromMap(doc.data()!) : null;
   }
 }
