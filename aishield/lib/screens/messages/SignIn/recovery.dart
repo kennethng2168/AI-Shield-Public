@@ -44,10 +44,10 @@ class _RecoveryPageFormState extends ConsumerState<RecoveryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(mnemonicPhraseProvider).isEmpty
-        ? CircularProgressIndicator()
-        : Scaffold(
-            body: SafeArea(
+    return Scaffold(
+      body: ref.watch(mnemonicPhraseProvider).isEmpty
+          ? SafeArea(child: Center(child: CircularProgressIndicator()))
+          : SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: SingleChildScrollView(
@@ -209,6 +209,6 @@ class _RecoveryPageFormState extends ConsumerState<RecoveryPage> {
                 ),
               ),
             ),
-          );
+    );
   }
 }

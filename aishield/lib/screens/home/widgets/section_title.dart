@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:social_share/social_share.dart';
 
 class SectionTitle extends StatelessWidget {
   final String title;
@@ -22,14 +24,27 @@ class SectionTitle extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(50),
               color: Color(0xFFEBEBEB),
             ),
             child: Icon(
               LineAwesomeIcons.arrow_right,
-              size: 15,
+              size: 16,
             ),
-          )
+          ),
+          const Spacer(),
+          title == "Risk Status"
+              ? GestureDetector(
+                  child: Icon(Icons.share),
+                  onTap: () async {
+                    Position _currentLocation =
+                        await Geolocator.getCurrentPosition(
+                            desiredAccuracy: LocationAccuracy.high);
+                    SocialShare.shareOptions("Emergency Current Location: " +
+                        'https://www.google.com/maps/search/?api=1&query=${_currentLocation.latitude},${_currentLocation.longitude}');
+                  },
+                )
+              : Container(),
         ],
       ),
     );

@@ -158,12 +158,12 @@ class _HomeState extends ConsumerState<Home> {
   Widget build(BuildContext context) {
     var lonL = [101.7006665, 101.7006666, 101.7006667, 101.7006668];
     var latL = [3.0554333, 3.0554334, 3.0554335, 3.0554336];
-    return ref.watch(latitudeProvider).isEmpty &&
-            ref.watch(longitudeProvider).isEmpty
-        ? CircularProgressIndicator()
-        : Scaffold(
-            backgroundColor: Colors.white,
-            body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: ref.watch(latitudeProvider).isEmpty &&
+              ref.watch(longitudeProvider).isEmpty
+          ? SafeArea(child: Center(child: CircularProgressIndicator()))
+          : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
@@ -195,26 +195,30 @@ class _HomeState extends ConsumerState<Home> {
                                 )),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Gold Member",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.w600,
+                            GestureDetector(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Gold Member",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                Icon(
-                                  Icons.card_giftcard,
-                                  color: Color(0XFFFFD700),
-                                  size: 32,
-                                ),
-                              ],
+                                  const SizedBox(width: 5),
+                                  Icon(
+                                    Icons.card_giftcard,
+                                    color: Color(0XFFFFD700),
+                                    size: 32,
+                                  ),
+                                ],
+                              ),
+                              onTap: () =>
+                                  Navigator.push(context, _createRoute()),
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
@@ -295,130 +299,12 @@ class _HomeState extends ConsumerState<Home> {
                           ],
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.topCenter,
-                        padding: EdgeInsets.only(
-                          top: 225,
-                          right: 15,
-                          left: 15,
-                        ),
-                        child: Container(
-                          height: 100,
-                          width: MediaQuery.of(context).size.width,
-                          child: Card(
-                            color: Colors.white,
-                            elevation: 8,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 10,
-                                  ),
-                                  child: GestureDetector(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.photo_album,
-                                          size: 45,
-                                          color: mainColor,
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          "Rewards",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      Navigator.push(context, _createRoute());
-                                    },
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 10,
-                                  ),
-                                  child: GestureDetector(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.share,
-                                          size: 45,
-                                          color: mainColor,
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          "Emergency",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () async {
-                                      Position _currentLocation =
-                                          await Geolocator.getCurrentPosition(
-                                              desiredAccuracy:
-                                                  LocationAccuracy.high);
-                                      SocialShare.shareOptions(
-                                          "Emergency Current Location: " +
-                                              'https://www.google.com/maps/search/?api=1&query=${_currentLocation.latitude},${_currentLocation.longitude}');
-                                    },
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 10,
-                                  ),
-                                  child: GestureDetector(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.flood,
-                                          size: 45,
-                                          color: mainColor,
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          "Risk Status",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () async {
-                                      print("Supplies");
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   Column(
                     children: [
-                      // BtnTopUpWalletOVO(),
-                      // Divider(
-                      //   color: Color(0xFFFAFAFA),
-                      //   thickness: 2,
-                      // ),
-                      // BtnMainMenus(),
                       const SizedBox(height: 10),
-                      SectionTitle(title: "Check Your Location"),
-
+                      SectionTitle(title: "Risk Status"),
                       const SizedBox(height: 5),
                       Container(
                         padding: EdgeInsets.only(
@@ -605,7 +491,6 @@ class _HomeState extends ConsumerState<Home> {
                         title: "Subscribe Now",
                       ),
                       const SizedBox(height: 10),
-
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Column(
@@ -645,7 +530,6 @@ class _HomeState extends ConsumerState<Home> {
                           ],
                         ),
                       ),
-
                       const SizedBox(
                         height: 10,
                       ),
@@ -707,6 +591,6 @@ class _HomeState extends ConsumerState<Home> {
                 ],
               ),
             ),
-          );
+    );
   }
 }
