@@ -2,6 +2,24 @@
 
 AI Shield for Google Solution Challenge 2024
 
+## AI Shield
+
+#### Usage
+
+AI Shield is a flutter mobile project that can be used in both IOS and Android
+
+1. Open the AI Shield Folder
+2. Run without debugging on the main.dart
+
+Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the `release.zip` file which contains the `OmniTwin.exe` binary.
+
+##  Python Backend AI Inference
+```sh
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install -r requirements.txt
+python read_data.py
+```
+
 ## Omni Twin
 
 #### Usage

@@ -30,14 +30,6 @@ class _RecoveryPageFormState extends ConsumerState<RecoveryPage> {
 
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      var currentPlatform = Theme.of(context).platform;
-      LocalStorageService service = LocalStorageService(currentPlatform);
-      var secureDataList = await service.readAllSecureData();
-      List<int> bytesEntropy = hex.decode(secureDataList?[1]);
-      var mnemonic = Mnemonic(bytesEntropy, Language.english);
-      ref.watch(mnemonicPhraseProvider.notifier).state = mnemonic.sentence;
-    });
   }
 
   bool passwordNotFound = false;

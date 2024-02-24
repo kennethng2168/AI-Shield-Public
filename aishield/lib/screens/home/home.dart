@@ -174,7 +174,6 @@ class _HomeState extends ConsumerState<Home> {
                                 )),
                               ],
                             ),
-                            const SizedBox(height: 10),
                             GestureDetector(
                               child: Row(
                                 children: [
@@ -285,7 +284,7 @@ class _HomeState extends ConsumerState<Home> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      SectionTitle(title: "Risk Status"),
+                      SectionTitle(title: "Risks"),
                       const SizedBox(height: 5),
                       Container(
                         padding: EdgeInsets.only(

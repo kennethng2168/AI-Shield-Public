@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:aishield/providers.dart';
 import 'package:convert/convert.dart';
 
 import 'package:bip39_mnemonic/bip39_mnemonic.dart';
@@ -27,16 +28,12 @@ class SignUpForm extends ConsumerStatefulWidget {
 
 class _SignUpFormState extends ConsumerState<SignUpForm> {
   @override
-  // final LocalStorageService _localStorageService = LocalStorageService();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
   void initState() {
     super.initState();
-
-    // var _items = await _localStorageService.readAllSecureData();
-    // print(_items);
   }
 
   bool? passwordNotMatch;
@@ -155,8 +152,6 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                           final seed = bip39.mnemonicToSeed(modifiedMnemonic);
                           final isValidMnemonic = bip39
                               .validateMnemonic(modifiedMnemonic.toString());
-                          print(modifiedMnemonic);
-                          print(isValidMnemonic);
                           if (!isValidMnemonic) {
                             throw 'Invalid mnemonic';
                           }
@@ -170,13 +165,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                           final _credentials =
                               EthPrivateKey.fromHex(privateKey);
                           print(_credentials.address);
-
+                          ref.watch(mnemonicPhraseProvider.notifier).state =
+                              modifiedMnemonic;
                           //Store the data into a secure local storage with the following parameters
                           var storage = LocalStorage(
                             categories: "password",
                             value: keccak512sum(passwordHex),
                             mac: keccak512sum(keyMAC.toString()),
-                            mnemonicSeed: modifiedMnemonic,
+                            mnemonicSeed: ref.watch(mnemonicPhraseProvider),
                             mnemonicEntropy: hex.encode(mnemonic.entropy),
                             keyHex: keyHex,
                             keyPair: bytesToHex(keyPair),

@@ -33,7 +33,7 @@ class SectionTitle extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          title == "Risk Status"
+          title == "Risks"
               ? GestureDetector(
                   child: Row(
                     children: [
