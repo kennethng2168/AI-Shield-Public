@@ -11,9 +11,10 @@ AI Shield is a flutter mobile project that can be used in both IOS and Android
 1. Open the AI Shield Folder
 2. Run without debugging on the main.dart
 
-Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the `release.zip` file which contains the `OmniTwin.exe` binary.
+Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the `app-release.apk` file in Android device.
 
 ##  Python Backend AI Inference
+The AI Inference is built by using Python. The data was streamed from the firebase when there's new update to send AI inference images and results back to firestore and storage which can be visualize in both AI Shield (Flutter App) or Omni Twin (Unity)
 ```sh
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 pip install -r requirements.txt

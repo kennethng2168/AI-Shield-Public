@@ -49,7 +49,7 @@ class ProductListTile extends StatelessWidget {
         },
         child: Container(
           width: screenSize.width,
-          height: 120,
+          height: 130,
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             color: Colors.white,
