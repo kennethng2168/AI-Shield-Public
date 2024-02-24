@@ -8,6 +8,9 @@ final firebaseAuthProvider =
 final authStateChangesProvider = StreamProvider<User?>((ref) {
   return ref.watch(firebaseAuthProvider).authStateChanges();
 });
+
+final chanceProvider = StateProvider<int>((ref) => 0);
+final dataLengthProvider = StateProvider<int>((ref) => 0);
 final completedAlbumProvider = StateProvider<int>((ref) => 0);
 final numberAlbumProvider = StateProvider<int>((ref) => 0);
 final reward1Provider = StateProvider<double>((ref) => 0.0);

@@ -40,8 +40,6 @@ class _HomeState extends ConsumerState<Home> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       _determinePosition();
-      print(latitudeProvider);
-      print(longitudeProvider);
       contractAddress();
     });
   }
@@ -366,101 +364,6 @@ class _HomeState extends ConsumerState<Home> {
                                             ),
                                         ]);
                                       }
-
-                                      // Marker(
-                                      //   width: 30.0,
-                                      //   height: 30.0,
-                                      //   point: LatLng(3.0554, 102.7006),
-                                      //   child: Container(
-                                      //     child: Container(
-                                      //       child: Icon(
-                                      //         Icons.flood,
-                                      //         color: mainColor,
-                                      //         size: 40,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Marker(
-                                      //   width: 30.0,
-                                      //   height: 30.0,
-                                      //   point: LatLng(3.0554, 101.8007),
-                                      //   child: Container(
-                                      //     child: Container(
-                                      //       child: Image.asset("assets/images/fire.png",
-                                      //           color: Colors.red),
-                                      //       // color: Colors.green,
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Marker(
-                                      //   width: 30.0,
-                                      //   height: 30.0,
-                                      //   point: LatLng(3.0554, 101.9007),
-                                      //   child: Container(
-                                      //     child: Container(
-                                      //       child: Icon(
-                                      //         Icons.flood,
-                                      //         color: Colors.lightBlue,
-                                      //         size: 40,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Marker(
-                                      //   width: 30.0,
-                                      //   height: 30.0,
-                                      //   point: LatLng(3.0004, 101.5507),
-                                      //   child: Container(
-                                      //     child: Container(
-                                      //       child: Icon(
-                                      //         Icons.flood,
-                                      //         color: Colors.lightBlue,
-                                      //         size: 40,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Marker(
-                                      //   width: 30.0,
-                                      //   height: 30.0,
-                                      //   point: LatLng(3.0004, 101.7507),
-                                      //   child: Container(
-                                      //     child: Container(
-                                      //       child: Icon(
-                                      //         Icons.flood,
-                                      //         color: Colors.lightBlue,
-                                      //         size: 40,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Marker(
-                                      //   width: 30.0,
-                                      //   height: 30.0,
-                                      //   point: LatLng(3.1004, 101.6507),
-                                      //   child: Container(
-                                      //     child: Container(
-                                      //       child: Image.asset("assets/images/fire.png",
-                                      //           color: Colors.red),
-                                      //       // color: Colors.,
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Marker(
-                                      //   width: 30.0,
-                                      //   height: 30.0,
-                                      //   point: LatLng(3.2004, 101.6507),
-                                      //   child: Container(
-                                      //     child: Container(
-                                      //       child: Icon(
-                                      //         Icons.flood,
-                                      //         color: Colors.lightBlue,
-                                      //         size: 40,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     })
                               ],
                             ),

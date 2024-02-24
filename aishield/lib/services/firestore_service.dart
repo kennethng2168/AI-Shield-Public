@@ -36,6 +36,11 @@ class FirestoreService {
             }).toList()); // Construct a list out of the products mapping
   }
 
+  Future<int> getDetectionCount() async {
+    QuerySnapshot querySnapshot = await firestore.collection('detection').get();
+    return querySnapshot.size;
+  }
+
   Future<void> deleteDetection(String id) async {
     return await firestore.collection("detection").doc(id).delete();
   }

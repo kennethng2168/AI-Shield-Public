@@ -16,6 +16,8 @@ class LocalStorage {
   String? rewards;
   int? rewardCompleted;
   int? albumCompleted;
+  int? dataLength;
+  int? chance;
 
   String keyPair;
   LocalStorage(
@@ -28,7 +30,9 @@ class LocalStorage {
       this.keyPair = "",
       this.rewards = "",
       this.rewardCompleted,
-      this.albumCompleted});
+      this.albumCompleted,
+      this.dataLength,
+      this.chance});
 }
 
 class LocalStorageService {
@@ -90,6 +94,16 @@ class LocalStorageService {
         key: "albumCompleted",
         value: storageItem.albumCompleted.toString(),
       );
+      await _storage.write(
+        iOptions: _getIOSOptions(),
+        key: "dataLength",
+        value: storageItem.dataLength.toString(),
+      );
+      await _storage.write(
+        iOptions: _getIOSOptions(),
+        key: "chance",
+        value: storageItem.chance.toString(),
+      );
       return "IOS Write Data";
     } else if (platform == TargetPlatform.android) {
       await _storage.write(
@@ -137,6 +151,16 @@ class LocalStorageService {
         aOptions: _getAndroidOptions(),
         key: "albumCompleted",
         value: storageItem.albumCompleted.toString(),
+      );
+      await _storage.write(
+        aOptions: _getAndroidOptions(),
+        key: "dataLength",
+        value: storageItem.dataLength.toString(),
+      );
+      await _storage.write(
+        aOptions: _getAndroidOptions(),
+        key: "chance",
+        value: storageItem.chance.toString(),
       );
       return "Android Write Data";
     } else {
@@ -196,7 +220,7 @@ class LocalStorageService {
     if (platform == TargetPlatform.iOS) {
       Map<String, String> allValue =
           await _storage.readAll(iOptions: _getIOSOptions());
-      print(allValue);
+
       // print(allValue);
       var listStorage = [];
       listStorage.add(allValue["password"]);
@@ -208,6 +232,8 @@ class LocalStorageService {
       listStorage.add(allValue["rewards"]);
       listStorage.add(allValue["rewardCompleted"]);
       listStorage.add(allValue["albumCompleted"]);
+      listStorage.add(allValue["dataLength"]);
+      listStorage.add(allValue["chance"]);
 
       // print(listStorage);
       return listStorage;
@@ -225,6 +251,8 @@ class LocalStorageService {
       listStorage.add(allValue["rewards"]);
       listStorage.add(allValue["rewardCompleted"]);
       listStorage.add(allValue["albumCompleted"]);
+      listStorage.add(allValue["dataLength"]);
+      listStorage.add(allValue["chance"]);
 
       // print(listStorage);
       return listStorage;

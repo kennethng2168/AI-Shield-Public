@@ -12,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import '../../constant.dart';
 import '../../models/Detection.dart';
 import '../../providers.dart';
+import '../../services/secure_storage_service.dart';
 import '../../utils/snackbars.dart';
 
 class ReportPage extends ConsumerStatefulWidget {
@@ -88,6 +89,27 @@ class _ReportPageState extends ConsumerState<ReportPage> {
     {"flag": false, "title": "Potholes", "icon": Icons.circle}
   ];
   bool? isSubmitButton;
+
+  Future<void> _readStorage() async {
+    var currentPlatform = Theme.of(context).platform;
+    LocalStorageService service = LocalStorageService(currentPlatform);
+    var secureDataList = await service.readAllSecureData();
+    ref.watch(chanceProvider.notifier).state = int.parse(secureDataList?[10]);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      _readStorage();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _getCurrentPosition();
@@ -120,9 +142,26 @@ class _ReportPageState extends ConsumerState<ReportPage> {
         latitude: '${_currentPosition?.latitude ?? ""}',
         longitude: '${_currentPosition?.longitude ?? ""}',
       ));
-      Timer(Duration(milliseconds: 300), () {
-        print(ref.watch(databaseProvider)?.docId);
-      });
+      var currentPlatform = Theme.of(context).platform;
+      LocalStorageService service = LocalStorageService(currentPlatform);
+      var secureDataList = await service.readAllSecureData();
+      ref.watch(chanceProvider.notifier).state += 1;
+
+      var local = LocalStorage(
+        categories: "password",
+        value: secureDataList?[0],
+        mac: secureDataList?[3],
+        mnemonicSeed: secureDataList?[5],
+        mnemonicEntropy: secureDataList?[1],
+        keyHex: secureDataList?[2],
+        keyPair: secureDataList?[4],
+        rewards: secureDataList?[6],
+        rewardCompleted: int.parse(secureDataList?[7]),
+        albumCompleted: int.parse(secureDataList?[8]),
+        dataLength: int.parse(secureDataList?[9]),
+        chance: ref.watch(chanceProvider),
+      );
+      service.writeData(local);
 
       //
       openIconSnackBar(
@@ -140,12 +179,6 @@ class _ReportPageState extends ConsumerState<ReportPage> {
       child: Center(
         child: Column(
           children: [
-            // Container(
-            //   child: Image.asset(
-            //     "assets/images/fire2.jpg",
-            //     fit: BoxFit.fill,
-            //   ),
-            // ),
             Consumer(
               builder: (context, watch, child) {
                 final image = ref.watch(addImageProvider);
@@ -249,7 +282,6 @@ class _ReportPageState extends ConsumerState<ReportPage> {
                 },
               ),
             ),
-
             Container(
               height: 60,
               width: 400,

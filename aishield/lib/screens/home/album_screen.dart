@@ -31,6 +31,11 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
@@ -44,7 +49,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
     var secureDataList = await service.readAllSecureData();
     var storageRewards = secureDataList?[6];
     List<String> rewardsList = storageRewards.split(", ");
-    print(rewardsList);
+    // print(rewardsList);
     ref.watch(reward1Provider.notifier).state = double.parse(rewardsList[0]);
     ref.watch(reward2Provider.notifier).state = double.parse(rewardsList[1]);
     ref.watch(reward3Provider.notifier).state = double.parse(rewardsList[2]);
@@ -53,6 +58,11 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
         int.parse(secureDataList?[7]);
     ref.watch(completedAlbumProvider.notifier).state =
         int.parse(secureDataList?[8]);
+    ref.watch(dataLengthProvider.notifier).state =
+        int.parse(secureDataList?[9]);
+    ref.watch(chanceProvider.notifier).state = int.parse(secureDataList?[10]);
+    print(ref.watch(chanceProvider));
+    var detectionCount = await ref.read(databaseProvider)!.getDetectionCount();
   }
 
   dynamic imagesList = [
@@ -64,6 +74,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
   final random = new Random();
 
   Widget build(BuildContext context) {
+    var detection = ref.read(databaseProvider)!.getDetection();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -125,7 +136,9 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                               width: 180,
                               padding: EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: ref.watch(chanceProvider) <= 0
+                                    ? Colors.grey.shade500
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: Row(
@@ -148,206 +161,262 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                                 ],
                               ),
                             ),
-                            onTap: () async {
-                              var randomImage =
-                                  imagesList[random.nextInt(imagesList.length)];
+                            onTap: ref.watch(chanceProvider) <= 0
+                                ? null
+                                : () async {
+                                    var randomImage = imagesList[
+                                        random.nextInt(imagesList.length)];
+                                    ref.watch(chanceProvider.notifier).state -=
+                                        1;
+                                    for (var i = 0;
+                                        i < imagesList.length;
+                                        i++) {
+                                      if (randomImage == imagesList[i]) {
+                                        if (i == 0) {
+                                          if (ref.watch(reward1Provider) >=
+                                              1.00) {
+                                            print("Try Again Next Time");
+                                          } else {
+                                            ref
+                                                .watch(reward1Provider.notifier)
+                                                .state += 0.25;
+                                            if (ref.watch(reward1Provider) >=
+                                                1.00) {
+                                              ref
+                                                  .watch(numberAlbumProvider
+                                                      .notifier)
+                                                  .state += 1;
+                                            }
+                                            //Store the data into a secure local storage with the following parameters
+                                            var currentPlatform =
+                                                Theme.of(context).platform;
+                                            LocalStorageService service =
+                                                LocalStorageService(
+                                                    currentPlatform);
+                                            var secureDataList = await service
+                                                .readAllSecureData();
 
-                              for (var i = 0; i < imagesList.length; i++) {
-                                if (randomImage == imagesList[i]) {
-                                  if (i == 0) {
-                                    if (ref.watch(reward1Provider) >= 1.00) {
-                                      print("Try Again Next Time");
-                                    } else {
-                                      ref
-                                          .watch(reward1Provider.notifier)
-                                          .state += 0.25;
-                                      if (ref.watch(reward1Provider) >= 1.00) {
+                                            var storage = LocalStorage(
+                                              categories: "password",
+                                              value: secureDataList?[0],
+                                              mac: secureDataList?[3],
+                                              mnemonicSeed: secureDataList?[5],
+                                              mnemonicEntropy:
+                                                  secureDataList?[1],
+                                              keyHex: secureDataList?[2],
+                                              keyPair: secureDataList?[4],
+                                              rewards:
+                                                  "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                              rewardCompleted: ref
+                                                  .watch(numberAlbumProvider),
+                                              albumCompleted: ref.watch(
+                                                  completedAlbumProvider),
+                                              dataLength:
+                                                  ref.watch(dataLengthProvider),
+                                              chance: ref.watch(chanceProvider),
+                                            );
+                                            service.writeData(storage);
+                                          }
+                                        } else if (i == 1) {
+                                          if (ref.watch(reward2Provider) >=
+                                              1.00) {
+                                            print("Try Again Next Time");
+                                          } else {
+                                            ref
+                                                .watch(reward2Provider.notifier)
+                                                .state += 0.25;
+
+                                            if (ref.watch(reward2Provider) >=
+                                                1.00) {
+                                              ref
+                                                  .watch(numberAlbumProvider
+                                                      .notifier)
+                                                  .state += 1;
+                                            }
+                                            var currentPlatform =
+                                                Theme.of(context).platform;
+                                            LocalStorageService service =
+                                                LocalStorageService(
+                                                    currentPlatform);
+                                            var secureDataList = await service
+                                                .readAllSecureData();
+
+                                            var storage = LocalStorage(
+                                              categories: "password",
+                                              value: secureDataList?[0],
+                                              mac: secureDataList?[3],
+                                              mnemonicSeed: secureDataList?[5],
+                                              mnemonicEntropy:
+                                                  secureDataList?[1],
+                                              keyHex: secureDataList?[2],
+                                              keyPair: secureDataList?[4],
+                                              rewards:
+                                                  "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                              rewardCompleted: ref
+                                                  .watch(numberAlbumProvider),
+                                              albumCompleted: ref.watch(
+                                                  completedAlbumProvider),
+                                              dataLength:
+                                                  ref.watch(dataLengthProvider),
+                                              chance: ref.watch(chanceProvider),
+                                            );
+                                            service.writeData(storage);
+                                          }
+                                        } else if (i == 2) {
+                                          if (ref.watch(reward3Provider) >=
+                                              1.00) {
+                                            print("Try Again Next Time");
+                                          } else {
+                                            ref
+                                                .watch(reward3Provider.notifier)
+                                                .state += 0.25;
+                                            if (ref.watch(reward3Provider) >=
+                                                1.00) {
+                                              ref
+                                                  .watch(numberAlbumProvider
+                                                      .notifier)
+                                                  .state += 1;
+                                            }
+                                            var currentPlatform =
+                                                Theme.of(context).platform;
+                                            LocalStorageService service =
+                                                LocalStorageService(
+                                                    currentPlatform);
+                                            var secureDataList = await service
+                                                .readAllSecureData();
+
+                                            var storage = LocalStorage(
+                                              categories: "password",
+                                              value: secureDataList?[0],
+                                              mac: secureDataList?[3],
+                                              mnemonicSeed: secureDataList?[5],
+                                              mnemonicEntropy:
+                                                  secureDataList?[1],
+                                              keyHex: secureDataList?[2],
+                                              keyPair: secureDataList?[4],
+                                              rewards:
+                                                  "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                              rewardCompleted: ref
+                                                  .watch(numberAlbumProvider),
+                                              albumCompleted: ref.watch(
+                                                  completedAlbumProvider),
+                                              dataLength:
+                                                  ref.watch(dataLengthProvider),
+                                              chance: ref.watch(chanceProvider),
+                                            );
+                                            service.writeData(storage);
+                                          }
+                                        } else if (i == 3) {
+                                          if (ref.watch(reward4Provider) >=
+                                              1.00) {
+                                            print("Try Again Next Time");
+                                          } else {
+                                            ref
+                                                .watch(reward4Provider.notifier)
+                                                .state += 0.25;
+                                            if (ref.watch(reward4Provider) >=
+                                                1.00) {
+                                              ref
+                                                  .watch(numberAlbumProvider
+                                                      .notifier)
+                                                  .state += 1;
+                                            }
+                                            var currentPlatform =
+                                                Theme.of(context).platform;
+                                            LocalStorageService service =
+                                                LocalStorageService(
+                                                    currentPlatform);
+                                            var secureDataList = await service
+                                                .readAllSecureData();
+
+                                            var storage = LocalStorage(
+                                              categories: "password",
+                                              value: secureDataList?[0],
+                                              mac: secureDataList?[3],
+                                              mnemonicSeed: secureDataList?[5],
+                                              mnemonicEntropy:
+                                                  secureDataList?[1],
+                                              keyHex: secureDataList?[2],
+                                              keyPair: secureDataList?[4],
+                                              rewards:
+                                                  "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                              rewardCompleted: ref
+                                                  .watch(numberAlbumProvider),
+                                              albumCompleted: ref.watch(
+                                                  completedAlbumProvider),
+                                              dataLength:
+                                                  ref.watch(dataLengthProvider),
+                                              chance: ref.watch(chanceProvider),
+                                            );
+                                            service.writeData(storage);
+                                          }
+                                        }
+                                      }
+                                      if (ref
+                                              .watch(
+                                                  numberAlbumProvider.notifier)
+                                              .state >=
+                                          4) {
                                         ref
                                             .watch(numberAlbumProvider.notifier)
-                                            .state += 1;
-                                      }
-                                      //Store the data into a secure local storage with the following parameters
-                                      var currentPlatform =
-                                          Theme.of(context).platform;
-                                      LocalStorageService service =
-                                          LocalStorageService(currentPlatform);
-                                      var secureDataList =
-                                          await service.readAllSecureData();
-
-                                      var storage = LocalStorage(
-                                        categories: "password",
-                                        value: secureDataList?[0],
-                                        mac: secureDataList?[3],
-                                        mnemonicSeed: secureDataList?[5],
-                                        mnemonicEntropy: secureDataList?[1],
-                                        keyHex: secureDataList?[2],
-                                        keyPair: secureDataList?[4],
-                                        rewards:
-                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
-                                        rewardCompleted:
-                                            ref.watch(numberAlbumProvider),
-                                      );
-                                      service.writeData(storage);
-                                    }
-                                  } else if (i == 1) {
-                                    if (ref.watch(reward2Provider) >= 1.00) {
-                                      print("Try Again Next Time");
-                                    } else {
-                                      ref
-                                          .watch(reward2Provider.notifier)
-                                          .state += 0.25;
-
-                                      if (ref.watch(reward2Provider) >= 1.00) {
+                                            .state = 0;
+                                        var currentPlatform =
+                                            Theme.of(context).platform;
+                                        LocalStorageService service =
+                                            LocalStorageService(
+                                                currentPlatform);
+                                        var secureDataList =
+                                            await service.readAllSecureData();
                                         ref
-                                            .watch(numberAlbumProvider.notifier)
+                                            .watch(
+                                                completedAlbumProvider.notifier)
                                             .state += 1;
-                                      }
-                                      var currentPlatform =
-                                          Theme.of(context).platform;
-                                      LocalStorageService service =
-                                          LocalStorageService(currentPlatform);
-                                      var secureDataList =
-                                          await service.readAllSecureData();
-
-                                      var storage = LocalStorage(
-                                        categories: "password",
-                                        value: secureDataList?[0],
-                                        mac: secureDataList?[3],
-                                        mnemonicSeed: secureDataList?[5],
-                                        mnemonicEntropy: secureDataList?[1],
-                                        keyHex: secureDataList?[2],
-                                        keyPair: secureDataList?[4],
-                                        rewards:
-                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
-                                        rewardCompleted:
-                                            ref.watch(numberAlbumProvider),
-                                      );
-                                      service.writeData(storage);
-                                    }
-                                  } else if (i == 2) {
-                                    if (ref.watch(reward3Provider) >= 1.00) {
-                                      print("Try Again Next Time");
-                                    } else {
-                                      ref
-                                          .watch(reward3Provider.notifier)
-                                          .state += 0.25;
-                                      if (ref.watch(reward3Provider) >= 1.00) {
+                                        var storage = LocalStorage(
+                                            categories: "password",
+                                            value: secureDataList?[0],
+                                            mac: secureDataList?[3],
+                                            mnemonicSeed: secureDataList?[5],
+                                            mnemonicEntropy: secureDataList?[1],
+                                            keyHex: secureDataList?[2],
+                                            keyPair: secureDataList?[4],
+                                            rewards:
+                                                "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
+                                            rewardCompleted:
+                                                ref.watch(numberAlbumProvider),
+                                            albumCompleted: ref
+                                                .watch(completedAlbumProvider));
                                         ref
-                                            .watch(numberAlbumProvider.notifier)
-                                            .state += 1;
-                                      }
-                                      var currentPlatform =
-                                          Theme.of(context).platform;
-                                      LocalStorageService service =
-                                          LocalStorageService(currentPlatform);
-                                      var secureDataList =
-                                          await service.readAllSecureData();
-
-                                      var storage = LocalStorage(
-                                        categories: "password",
-                                        value: secureDataList?[0],
-                                        mac: secureDataList?[3],
-                                        mnemonicSeed: secureDataList?[5],
-                                        mnemonicEntropy: secureDataList?[1],
-                                        keyHex: secureDataList?[2],
-                                        keyPair: secureDataList?[4],
-                                        rewards:
-                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
-                                        rewardCompleted:
-                                            ref.watch(numberAlbumProvider),
-                                      );
-                                      service.writeData(storage);
-                                    }
-                                  } else if (i == 3) {
-                                    if (ref.watch(reward4Provider) >= 1.00) {
-                                      print("Try Again Next Time");
-                                    } else {
-                                      ref
-                                          .watch(reward4Provider.notifier)
-                                          .state += 0.25;
-                                      if (ref.watch(reward4Provider) >= 1.00) {
+                                            .watch(reward1Provider.notifier)
+                                            .state = 0.0;
                                         ref
-                                            .watch(numberAlbumProvider.notifier)
-                                            .state += 1;
+                                            .watch(reward2Provider.notifier)
+                                            .state = 0.0;
+                                        ref
+                                            .watch(reward3Provider.notifier)
+                                            .state = 0.0;
+                                        ref
+                                            .watch(reward4Provider.notifier)
+                                            .state = 0.0;
                                       }
-                                      var currentPlatform =
-                                          Theme.of(context).platform;
-                                      LocalStorageService service =
-                                          LocalStorageService(currentPlatform);
-                                      var secureDataList =
-                                          await service.readAllSecureData();
-
-                                      var storage = LocalStorage(
-                                        categories: "password",
-                                        value: secureDataList?[0],
-                                        mac: secureDataList?[3],
-                                        mnemonicSeed: secureDataList?[5],
-                                        mnemonicEntropy: secureDataList?[1],
-                                        keyHex: secureDataList?[2],
-                                        keyPair: secureDataList?[4],
-                                        rewards:
-                                            "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
-                                        rewardCompleted:
-                                            ref.watch(numberAlbumProvider),
-                                      );
-                                      service.writeData(storage);
                                     }
-                                  }
-                                }
-                                if (ref
-                                        .watch(numberAlbumProvider.notifier)
-                                        .state >=
-                                    4) {
-                                  ref
-                                      .watch(numberAlbumProvider.notifier)
-                                      .state = 0;
-                                  var currentPlatform =
-                                      Theme.of(context).platform;
-                                  LocalStorageService service =
-                                      LocalStorageService(currentPlatform);
-                                  var secureDataList =
-                                      await service.readAllSecureData();
 
-                                  var storage = LocalStorage(
-                                      categories: "password",
-                                      value: secureDataList?[0],
-                                      mac: secureDataList?[3],
-                                      mnemonicSeed: secureDataList?[5],
-                                      mnemonicEntropy: secureDataList?[1],
-                                      keyHex: secureDataList?[2],
-                                      keyPair: secureDataList?[4],
-                                      rewards:
-                                          "${ref.watch(reward1Provider)}, ${ref.watch(reward2Provider)}, ${ref.watch(reward3Provider)}, ${ref.watch(reward4Provider)}",
-                                      rewardCompleted:
-                                          ref.watch(numberAlbumProvider),
-                                      albumCompleted: 0);
-                                  ref.watch(reward1Provider.notifier).state =
-                                      0.0;
-                                  ref.watch(reward2Provider.notifier).state =
-                                      0.0;
-                                  ref.watch(reward3Provider.notifier).state =
-                                      0.0;
-                                  ref.watch(reward4Provider.notifier).state =
-                                      0.0;
-                                }
-                              }
-
-                              final answer = await showRewardPopup<String>(
-                                context,
-                                backgroundColor: Colors.black,
-                                child: Positioned.fill(
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).pop(true);
-                                    },
-                                    child: Image.asset(
-                                      randomImage,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                                    final answer =
+                                        await showRewardPopup<String>(
+                                      context,
+                                      backgroundColor: Colors.black,
+                                      child: Positioned.fill(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).pop(true);
+                                          },
+                                          child: Image.asset(
+                                            randomImage,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
                           ),
                           const SizedBox(
                             width: 10,
@@ -357,7 +426,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
                       const SizedBox(height: 8),
                       Container(
                         child: Text(
-                          "Powered by Generative AI",
+                          "Remaining Chance: ${ref.watch(chanceProvider)}",
                           style: TextStyle(
                             decorationThickness: 1,
                             color: Colors.white70,
