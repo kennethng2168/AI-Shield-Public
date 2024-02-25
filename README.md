@@ -38,7 +38,7 @@ To debug or use the app for IOS, follow below steps:
 1. Open the AI Shield Folder
 2. Run without debugging on the main.dart
 
-Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the `app-release.apk` file or [direct download link](https://github.com/kennethng2168/AI-Shield-Public/releases/download/v1.0/app-release.apk) for Android device.
+Alternatively, head over to the [release](https://github.com/kennethng2168/AI-Shield-Public/releases) page and download the `app-release.apk` file or [direct download link](https://github.com/kennethng2168/AI-Shield-Public/releases/download/v1.1/app-release.apk) for Android device.
 
 ## AI Shield Screenshots
 
