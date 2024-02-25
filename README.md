@@ -1,23 +1,28 @@
 # AIShield
-## Problem Statement
 AI Shield for Google Solution Challenge 2024
 
 ## Technologies Used
 
-*   Flutter
+*   Flutter (Android/IOS)
 *   Firestore
 *   Google Storage
 *   YoloV8
 *   Python
 *   Unity/C#
-*   Firebase App Distribution for tester
+*   Nvidia Cuda
+*   Google Map
+*   Cesium Google Earth Map
+*   Firebase App Distribution for tester [link](https://appdistribution.firebase.google.com/pub/i/b2e86e62680b0e7c)
 
 ## Features
 
-*   Take a photo of the rock pool you found, it will then be uploaded and the organisms in the rock pools will be classified.
-*   View all rock pools around you and view what's in them.
-*   Create new rock pools and geo tag them.
+*   Crowd Mapping by taking a photo of the incidents such as Flood, Fires, Potholes and Accidents that you encounter in real life, then the image will be uploaded to Firebase and running the inference using YoloV8 Optimized by CUDA to identify the images.
+*   Each uploaded images will have the geo location when users take a picture.
+*   The evidences that has been uploaded will be showed in the Omni Twin (3D Management System/Digital Twin) with Cesium Google Map to identify the incidents accurately.
+*   The 3D Digital Twin can be used to simulate flood particles based on the terrain height from the Cesium Google Map.
+*   Users can use the Digital Twin to predict and direct relief efforts to the incidents location with accuracy to increase the response efficiency.
 
+## Mobile App
 #### Usage
 
 AI Shield is a flutter mobile project that can be used in both IOS and Android
